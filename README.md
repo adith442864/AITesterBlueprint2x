@@ -662,4 +662,35 @@ venv/bin/python main.py VWO-48
 
 ---
 
+## 📖 Chapter 16: DeepEval + Local Repo Q&A (work in progress)
+
+**Directory:** `Chapter_16_DeepEval/`
+
+Working chapter for two intersecting workflows:
+
+1. **DeepEval** — LLM evaluation framework. `deepeval==4.0.6` installed in the chapter venv for measuring quality of pipeline outputs (test plans, test cases, generated code).
+2. **Local Repo Q&A bot** — runs entirely offline using Ollama (`qwen2.5-coder:14b` for generation, `nomic-embed-text` for embeddings). Indexes the [Advance-Playwright-Framework](https://github.com/PramodDutta/Advance-Playwright-Framework) repo and answers questions against it.
+
+> The Q&A bot is **RAG** (retrieval-augmented generation) — embed the repo, retrieve top-k chunks at query time, stuff into prompt. The model weights are not modified. Real fine-tuning (LoRA via MLX/Unsloth) is a separate path.
+
+### Files (current)
+
+| File | Purpose |
+| :--- | :--- |
+| `SKILL.md` | Tiered-model-orchestration skill — orchestrator on Opus/Fable, subagents on Sonnet/Haiku |
+| `Fine_TUNE_Instructions.md` | Step-by-step setup guide for the local Q&A bot (Ollama + index + ask) |
+| `SETUP_GUIDE_FINE_TUNE_QWEN2.5.md.pdf` | Same guide as a PDF |
+
+### Setup
+
+```bash
+cd Chapter_16_DeepEval
+python3 -m venv venv && source venv/bin/activate
+pip install deepeval requests
+```
+
+For the Q&A bot follow [`Fine_TUNE_Instructions.md`](Chapter_16_DeepEval/Fine_TUNE_Instructions.md) — install Ollama, pull the two models, then run `index_repo.py` once and `ask.py` per question.
+
+---
+
 *Continue following this repository for future chapters exploring deeper AI integrations!*
